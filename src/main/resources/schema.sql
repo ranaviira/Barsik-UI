@@ -1,1 +1,2 @@
-create table users (id bigint not null, name varchar(255), login varchar(255), password varchar(255), primary key (id))
+create table contracts (id bigint not null, start date, number varchar(255), update date, check_box bit not null, primary key (id))
+

@@ -5,27 +5,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-
-@Table(name="users")
+@Table(name="contracts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Dogovor {
+public class Contract {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "start")
+    private LocalDate start;
 
-    @Column(name = "login")
-    private String login;
+    @Column(name = "number")
+    private String number;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "update")
+    private LocalDate update;
 
+    @Column(name = "check_box")
+    private Boolean checkBox;
 }
