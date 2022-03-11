@@ -1,17 +1,17 @@
 package com.example.ui.controllers;
 
 import com.example.ui.entity.Contract;
-import com.example.ui.service.ContractService;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -22,15 +22,14 @@ import java.util.ResourceBundle;
 @FxmlView("/com/example/ui/fxml/barsik-view.fxml")
 public class ContractController implements Initializable {
 
-    private final ContractService contractService;
+    private final ServerController serverController;
 
-    @Autowired
-    public ContractController(ContractService contractService) {
-        this.contractService = contractService;
+    public ContractController(ServerController serverController) {
+        this.serverController = serverController;
     }
 
     @FXML
-    private TableColumn<Contract, Boolean> checkBox;
+    private TableColumn<Contract, CheckBox> checkBox;
 
     @FXML
     private Label welcomeText;
@@ -59,14 +58,21 @@ public class ContractController implements Initializable {
         start.setCellValueFactory(new PropertyValueFactory<>("start"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         update.setCellValueFactory(new PropertyValueFactory<>("update"));
-        checkBox.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        checkBox.setCellValueFactory(param -> {
+            Contract contract = param.getValue();
+            CheckBox checkBox1 = new CheckBox();
+            checkBox1.setDisable(true);
+            checkBox1.selectedProperty().setValue(contract.getCheckBox());
+            checkBox1.selectedProperty().addListener((ov, old_val, new_val) -> contract.setCheckBox(new_val));
+            return new SimpleObjectProperty<>(checkBox1);
+        });
 
-        observableList.addAll(contractService.getAllContracts());
-        table.setItems(observableList);
     }
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("True если дата последнего обновления договора меньше текущей даты на 60 дней");
+        observableList.addAll(serverController.getAllContracts());
+        table.setItems(observableList);
+        welcomeText.setText("*Если дата последнего обновления договора меньше текущей даты на 60 дней");
     }
 }
