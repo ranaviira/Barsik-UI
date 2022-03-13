@@ -1,6 +1,6 @@
 package com.example.ui;
 
-import com.example.ui.controllers.ContractController;
+import com.example.ui.controllers.UserInterfaceController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -26,7 +26,7 @@ public class BarsikApplication extends Application {
     @Override
     public void start(Stage stage) {
         FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
-        Parent root = fxWeaver.loadView(ContractController.class);
+        Parent root = fxWeaver.loadView(UserInterfaceController.class);
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image("/icons/icons.jpg"));
         stage.setTitle("БАРСИК");

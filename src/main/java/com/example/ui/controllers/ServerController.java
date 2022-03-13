@@ -12,21 +12,20 @@ import java.util.List;
 @Controller
 public class ServerController {
 
-    private List<Contract> contractList;
+    private List<Contract> contractsList;
 
-
-    public void allC() {
+    private void getAllContractsFromServer() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Contract>> rateResponse =
                 restTemplate.exchange("http://localhost:8080/server",
                         HttpMethod.GET, null, new ParameterizedTypeReference<>() {
                         });
-        contractList = rateResponse.getBody();
+        contractsList = rateResponse.getBody();
 
     }
 
-    public List<Contract> getAllContracts() {
-        allC();
-        return contractList;
+    public List<Contract> getContractsList() {
+        getAllContractsFromServer();
+        return contractsList;
     }
 }

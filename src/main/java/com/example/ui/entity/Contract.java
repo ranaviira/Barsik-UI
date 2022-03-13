@@ -10,8 +10,8 @@ public class Contract {
 
     @Id
     private Long id;
-    private LocalDate start;
-    private String number;
-    private LocalDate update;
+    private LocalDate startDate;
+    private String ContractNumber;
+    private LocalDate updateDate;
     private Boolean checkBox;
 }
